@@ -6,6 +6,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "employee")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +29,6 @@ public class Employee {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
-    @Column(name ="rule")
-    private Employee_rule employeeRule ;
 
     @Column(name = "photo")
     private String photo;
@@ -37,11 +37,6 @@ public class Employee {
     private List<FinancialRecord> financialRecords;
 
 
-
+    //attendance
 }
 
-enum Employee_rule{
-    EMPLOYEE,
-    MANAGER,
-    ADMIN;
-}

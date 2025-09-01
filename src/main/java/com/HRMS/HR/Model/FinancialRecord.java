@@ -2,6 +2,9 @@ package com.HRMS.HR.Model;
 
 import jakarta.persistence.*;
 
+
+@Entity
+@Table(name ="financialarecord")
 public class FinancialRecord {
 
     @Id
