@@ -2,6 +2,7 @@ package com.HRMS.HR.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,12 +38,21 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FinancialRecord> financialRecords;
 
-    public Employee(String firstname, String lastname, String username, String password, Department department) {
+    @OneToMany(mappedBy = "TOemployee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> TOtasks;
+
+    @OneToMany(mappedBy = "FROMemployee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> FROMtasks;
+
+
+    public Employee(String firstname, String lastname, String username, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.password = password;
-        this.department = department;
+        financialRecords = new ArrayList<>();
+        TOtasks = new ArrayList<>();
+        FROMtasks = new ArrayList<>();
     }
 
     public long getId() {
@@ -111,6 +121,20 @@ public class Employee {
         record.setEmployee(this);
     }
 
-    //attendance
+    public List<Task> getTOtasks() {
+        return TOtasks;
+    }
+
+    public List<Task> getFROMtasks() {
+        return FROMtasks;
+    }
+
+    public void addTask(Task newtask , Employee to) {
+        FROMtasks.add(newtask);
+        newtask.setFROMemployee(this);
+        newtask.setTOemployee(to);
+    }
+
+//attendance
 }
 
